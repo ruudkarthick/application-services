@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +31,8 @@ import com.fsd.program.repo.UserRepository;
 @RestController
 @RequestMapping("/task")
 public class TaskServices {
+	
+	private static final Logger logger = LoggerFactory.getLogger(TaskServices.class);
 
 	@Autowired
 	private TaskRepository taskRepository;
@@ -44,7 +48,7 @@ public class TaskServices {
 
 	@RequestMapping("/getTasks")
 	public List<Task> getTasks() {
-
+		logger.info("Method getTasks() executed");
 		List<Task> tasks = taskRepository.findAll();
 
 		for (Task task : tasks) {
@@ -54,11 +58,15 @@ public class TaskServices {
 				task.setParentTask(parentTask.getParentTask());
 				
 			}
-			if (task.getUserId() != null) {
-				User user = userRepository.findById(task.getUserId()).get();
-				Project project = projectRepository.findById(task.getProjectId()).get();
-				task.setProjectName(project.getProjectName());
-				task.setUserName(user.getFirstName() + " " + user.getLastName());
+			if (task.getUserId() != null && !task.getUserId().isEmpty()) {
+				try {
+					User user = userRepository.findById(task.getUserId()).get();
+					Project project = projectRepository.findById(task.getProjectId()).get();
+					task.setProjectName(project.getProjectName());
+					task.setUserName(user.getFirstName() + " " + user.getLastName());
+				} catch (Exception e) {
+					logger.error("Error occured -- No UserId matching recored");
+				}
 			}
 		}
 
@@ -72,6 +80,7 @@ public class TaskServices {
 
 	@RequestMapping("/addUpdate")
 	public List<Task> addUpdateTask(@RequestBody Map<String, String> requestMap) throws ParseException {
+		logger.info("Method addUpdateTask() executed");
 		taskRepository.save(updateTaskEntity(requestMap));
 		return getTasks();
 	}
