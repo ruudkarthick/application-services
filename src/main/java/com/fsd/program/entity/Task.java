@@ -20,6 +20,8 @@ public class Task {
 	private String parentId;
 
 	private String parentTask;
+	
+	private boolean isParentTask;
 
 	private String projectId;
 
@@ -89,6 +91,27 @@ public class Task {
 	 */
 	public void setParentTask(String parentTask) {
 		this.parentTask = parentTask;
+	}
+	
+	/**
+	 * @return the isParentTask
+	 */
+	public boolean isParentTask() {
+		return isParentTask;
+	}
+	
+	/**
+	 * @return the getIsParentTask
+	 */
+	public boolean getIsParentTask() {
+		return isParentTask();
+	}
+
+	/**
+	 * @param isParentTask the isParentTask to set
+	 */
+	public void setParentTask(boolean isParentTask) {
+		this.isParentTask = isParentTask;
 	}
 
 	/**

@@ -30,6 +30,8 @@ public class Project {
 
 	private String managerName;
 
+	private int tasksCount;
+
 	/**
 	 * @return the id
 	 */
@@ -156,6 +158,21 @@ public class Project {
 	 */
 	public void setProjectName(String projectName) {
 		this.projectName = projectName;
+	}
+
+	/**
+	 * @return the tasksCount
+	 */
+	public int getTasksCount() {
+		return tasksCount;
+	}
+
+	/**
+	 * @param tasksCount
+	 *            the tasksCount to set
+	 */
+	public void setTasksCount(int tasksCount) {
+		this.tasksCount = tasksCount;
 	}
 
 }

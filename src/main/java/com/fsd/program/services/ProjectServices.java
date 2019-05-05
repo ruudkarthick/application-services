@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fsd.program.entity.Project;
+import com.fsd.program.entity.Task;
 import com.fsd.program.entity.User;
 import com.fsd.program.repo.ProjectRepository;
+import com.fsd.program.repo.TaskRepository;
 import com.fsd.program.repo.UserRepository;
 
 /**
@@ -35,10 +37,24 @@ public class ProjectServices {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private TaskRepository taskRepository;
+
 	@RequestMapping("/getProjects")
 	public List<Project> getProjects() {
 		logger.info("Method getproject() executed");
-		return projectRepository.findAll();
+		List<Project> projects = projectRepository.findAll();
+		if (projects == null || projects.size() < 1) {
+			return projects;
+		}
+		projects.stream().forEach((project) -> {
+			String projectId = project.getId();
+			List<Task> tasks = taskRepository.findByProjectId(projectId);
+			if (tasks != null) {
+				project.setTasksCount(tasks.size());
+			}
+		});
+		return projects;
 	}
 
 	@RequestMapping("/addUpdate")

@@ -12,7 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fsd.program.entity.Project;
+import com.fsd.program.entity.Task;
 import com.fsd.program.entity.User;
+import com.fsd.program.repo.ProjectRepository;
+import com.fsd.program.repo.TaskRepository;
 import com.fsd.program.repo.UserRepository;
 
 /**
@@ -27,6 +31,12 @@ public class UserServices {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private TaskRepository taskRepository;
+
+	@Autowired
+	private ProjectRepository projectRepository;
 
 	@RequestMapping("/getAllUsers")
 	public List<User> getAllUsers() {
@@ -43,6 +53,17 @@ public class UserServices {
 	@RequestMapping("/deleteUser")
 	public List<User> deleteUser(@RequestBody User user) {
 		userRepository.delete(user);
+		List<Task> tasks = taskRepository.findByUserId(user.getId());
+		for(Task task: tasks) {
+			task.setUserId("");
+			taskRepository.save(task);
+		}
+		List<Project> projects = projectRepository.findByManagerId(user.getId());
+		for(Project project: projects) {
+			project.setManagerId("");
+			project.setManagerName("");
+			projectRepository.save(project);
+		}
 		return userRepository.findAll();
 	}
 

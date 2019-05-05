@@ -6,6 +6,7 @@ package com.fsd.program.services;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -97,12 +98,13 @@ public class TaskServices {
 		taskEntity.setTask(requestMap.get("task"));
 		taskEntity.setEndDate(requestMap.get("endDate"));
 		taskEntity.setStartDate(requestMap.get("startDate"));
-		String parentId = requestMap.get("parentId");
+		String parentId = requestMap.get("parentId") != null ? requestMap.get("parentId") : UUID.randomUUID().toString();
 		if ("true".equalsIgnoreCase(requestMap.get("isParentTask"))) {
 			parentTaskEntity.setId(parentId);
 			parentTaskEntity.setTaskId(requestMap.get("id"));
 			parentTaskEntity.setParentTask(requestMap.get("task"));
 			parentTaskRepository.save(parentTaskEntity);
+			taskEntity.setParentTask(true);
 		}
 		taskEntity.setParentId(parentId);
 		taskEntity.setStatus(requestMap.get("status"));
