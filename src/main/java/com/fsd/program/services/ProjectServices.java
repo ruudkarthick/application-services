@@ -53,9 +53,6 @@ public class ProjectServices {
 
 		String managerId = requestMap.get("managerId");
 		User user = userRepository.findById(managerId).get();
-		if (user == null) {
-			throw new RuntimeException("Not a valid request");
-		}
 		projectEntity.setManagerId(managerId);
 		projectEntity.setManagerName(user.getFirstName() + " " + user.getLastName());
 		projectRepository.save(projectEntity);

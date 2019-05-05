@@ -4,11 +4,13 @@
 package com.fsd.program.entity;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * @author kj
  *
  */
+@Document(collection = "Task")
 public class Task {
 	@Id
 	private String id;
@@ -16,11 +18,11 @@ public class Task {
 	private String taskId;
 
 	private String parentId;
-	
+
 	private String parentTask;
 
 	private String projectId;
-	
+
 	private String projectName;
 
 	private String task;
@@ -32,9 +34,9 @@ public class Task {
 	private int priority;
 
 	private String status;
-	
+
 	private String userId;
-	
+
 	private String userName;
 
 	/**
@@ -73,7 +75,7 @@ public class Task {
 	public String getParentId() {
 		return parentId;
 	}
-	
+
 	/**
 	 * @return the parentTask
 	 */
@@ -82,7 +84,8 @@ public class Task {
 	}
 
 	/**
-	 * @param parentTask the parentTask to set
+	 * @param parentTask
+	 *            the parentTask to set
 	 */
 	public void setParentTask(String parentTask) {
 		this.parentTask = parentTask;
@@ -110,7 +113,7 @@ public class Task {
 	public void setProjectId(String projectId) {
 		this.projectId = projectId;
 	}
-	
+
 	/**
 	 * @return the projectName
 	 */
@@ -119,7 +122,8 @@ public class Task {
 	}
 
 	/**
-	 * @param projectName the projectName to set
+	 * @param projectName
+	 *            the projectName to set
 	 */
 	public void setProjectName(String projectName) {
 		this.projectName = projectName;
@@ -208,7 +212,8 @@ public class Task {
 	}
 
 	/**
-	 * @param userId the userId to set
+	 * @param userId
+	 *            the userId to set
 	 */
 	public void setUserId(String userId) {
 		this.userId = userId;
@@ -222,12 +227,11 @@ public class Task {
 	}
 
 	/**
-	 * @param userName the userName to set
+	 * @param userName
+	 *            the userName to set
 	 */
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	
-	
 
 }

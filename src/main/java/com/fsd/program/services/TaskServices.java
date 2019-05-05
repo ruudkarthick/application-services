@@ -6,7 +6,6 @@ package com.fsd.program.services;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,7 +22,7 @@ import com.fsd.program.repo.TaskRepository;
 import com.fsd.program.repo.UserRepository;
 
 /**
- * @author mmurugesan1
+ * @author kj
  *
  */
 @RestController
@@ -55,17 +54,12 @@ public class TaskServices {
 					task.setParentTask(parentTask.getParentTask());
 				}
 			}
-			User user = userRepository.findById(task.getUserId()).get();
-			if (user == null) {
-				throw new RuntimeException("Not a valid user request");
+			if (task.getUserId() != null) {
+				User user = userRepository.findById(task.getUserId()).get();
+				Project project = projectRepository.findById(task.getProjectId()).get();
+				task.setProjectName(project.getProjectName());
+				task.setUserName(user.getFirstName() + " " + user.getLastName());
 			}
-
-			Project project = projectRepository.findById(task.getProjectId()).get();
-			if (project == null) {
-				throw new RuntimeException("Not a valid project request");
-			}
-			task.setProjectName(project.getProjectName());
-			task.setUserName(user.getFirstName() + " " + user.getLastName());
 		}
 
 		return tasks;
@@ -81,7 +75,7 @@ public class TaskServices {
 		taskRepository.save(updateTaskEntity(requestMap));
 		return getTasks();
 	}
-	
+
 	@RequestMapping("/endTask")
 	public List<Task> endTask(@RequestBody Map<String, String> requestMap) throws ParseException {
 		Task taskEntity = updateTaskEntity(requestMap);
@@ -95,7 +89,7 @@ public class TaskServices {
 		taskRepository.delete(task);
 		return taskRepository.findAll();
 	}
-	
+
 	public Task updateTaskEntity(Map<String, String> requestMap) {
 		Task taskEntity = new Task();
 		ParentTask parentTaskEntity = new ParentTask();

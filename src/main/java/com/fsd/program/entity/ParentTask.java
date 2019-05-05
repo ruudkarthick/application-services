@@ -4,18 +4,20 @@
 package com.fsd.program.entity;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * @author kj
  *
  */
+@Document(collection = "ParentTask")
 public class ParentTask {
 
 	@Id
 	private String id;
 
 	private String taskId;
-	
+
 	private String parentId;
 
 	private String parentTask;
@@ -43,7 +45,8 @@ public class ParentTask {
 	}
 
 	/**
-	 * @param parentId the parentId to set
+	 * @param parentId
+	 *            the parentId to set
 	 */
 	public void setParentId(String parentId) {
 		this.parentId = parentId;
@@ -57,7 +60,8 @@ public class ParentTask {
 	}
 
 	/**
-	 * @param taskId the taskId to set
+	 * @param taskId
+	 *            the taskId to set
 	 */
 	public void setTaskId(String taskId) {
 		this.taskId = taskId;
