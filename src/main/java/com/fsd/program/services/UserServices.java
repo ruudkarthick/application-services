@@ -5,6 +5,8 @@ package com.fsd.program.services;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,11 +23,14 @@ import com.fsd.program.repo.UserRepository;
 @RequestMapping("/users")
 public class UserServices {
 
+	private static final Logger logger = LoggerFactory.getLogger(UserServices.class);
+	
 	@Autowired
 	private UserRepository userRepository;
 
 	@RequestMapping("/getAllUsers")
 	public List<User> getAllUsers() {
+		logger.info("Method getAllUsers() executed");
 		return userRepository.findAll();
 	}
 

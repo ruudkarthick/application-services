@@ -7,6 +7,8 @@ import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +27,8 @@ import com.fsd.program.repo.UserRepository;
 @RequestMapping("/projects")
 public class ProjectServices {
 
+	private static final Logger logger = LoggerFactory.getLogger(ProjectServices.class);
+
 	@Autowired
 	private ProjectRepository projectRepository;
 
@@ -33,6 +37,7 @@ public class ProjectServices {
 
 	@RequestMapping("/getProjects")
 	public List<Project> getProjects() {
+		logger.info("Method getproject() executed");
 		return projectRepository.findAll();
 	}
 
@@ -52,7 +57,7 @@ public class ProjectServices {
 			throw new RuntimeException("Not a valid request");
 		}
 		projectEntity.setManagerId(managerId);
-		projectEntity.setManagerName(user.getFirstName()+ " "+user.getLastName());
+		projectEntity.setManagerName(user.getFirstName() + " " + user.getLastName());
 		projectRepository.save(projectEntity);
 		return projectRepository.findAll();
 	}

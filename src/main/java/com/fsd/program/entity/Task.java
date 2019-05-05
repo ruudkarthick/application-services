@@ -16,6 +16,8 @@ public class Task {
 	private String taskId;
 
 	private String parentId;
+	
+	private String parentTask;
 
 	private String projectId;
 	
@@ -70,6 +72,20 @@ public class Task {
 	 */
 	public String getParentId() {
 		return parentId;
+	}
+	
+	/**
+	 * @return the parentTask
+	 */
+	public String getParentTask() {
+		return parentTask;
+	}
+
+	/**
+	 * @param parentTask the parentTask to set
+	 */
+	public void setParentTask(String parentTask) {
+		this.parentTask = parentTask;
 	}
 
 	/**
