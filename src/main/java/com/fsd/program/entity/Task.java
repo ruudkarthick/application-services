@@ -60,7 +60,7 @@ public class Task {
 	 * @return the taskId
 	 */
 	public String getTaskId() {
-		return taskId;
+		return taskId != null ? taskId : id;
 	}
 
 	/**

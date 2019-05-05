@@ -66,9 +66,14 @@ public class TestConfig {
 		ProjectRepository mock = Mockito.spy(ProjectRepository.class);
 		String contentFromJSON = new String(Files.readAllBytes(Paths.get("src/test/resources/projects.json")));
 		Gson gson = new Gson();
-		@SuppressWarnings("unchecked")
-		List<Project> projects = gson.fromJson(contentFromJSON, List.class);
+		List<Project> projects = new ArrayList<>();
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		List<LinkedTreeMap> tasksJson = gson.fromJson(contentFromJSON, List.class);
+		for (LinkedTreeMap<?, ?> jsonElement : tasksJson) {
+			projects.add(gson.fromJson(gson.toJson(jsonElement), Project.class));
+		}
 		Mockito.when(mock.findAll()).thenReturn(projects);
+		Mockito.when(mock.findByManagerId("1111111")).thenReturn(projects);
 		Mockito.when(mock.save(Mockito.any(Project.class))).thenReturn(new Project());
 		Mockito.doNothing().when(mock).delete(Mockito.any(Project.class));
 		String projectContentFromJSON = new String(
@@ -94,6 +99,11 @@ public class TestConfig {
 		Mockito.when(mock.findAll()).thenReturn(tasks);
 
 		Mockito.when(mock.save(Mockito.any(Task.class))).thenReturn(new Task());
+		
+		Mockito.when(mock.findByProjectId("1111111")).thenReturn(tasks);
+		
+		Mockito.when(mock.findByUserId("1111111")).thenReturn(tasks);
+		
 		Mockito.doNothing().when(mock).delete(Mockito.any(Task.class));
 		return mock;
 	}

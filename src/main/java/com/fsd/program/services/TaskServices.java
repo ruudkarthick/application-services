@@ -51,9 +51,8 @@ public class TaskServices {
 			String parentId = task.getParentId();
 			if (parentId != null) {
 				ParentTask parentTask = parentTaskRepository.findById(parentId).get();
-				if (parentTask != null) {
-					task.setParentTask(parentTask.getParentTask());
-				}
+				task.setParentTask(parentTask.getParentTask());
+				
 			}
 			if (task.getUserId() != null) {
 				User user = userRepository.findById(task.getUserId()).get();

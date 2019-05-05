@@ -44,15 +44,11 @@ public class ProjectServices {
 	public List<Project> getProjects() {
 		logger.info("Method getproject() executed");
 		List<Project> projects = projectRepository.findAll();
-		if (projects == null || projects.size() < 1) {
-			return projects;
-		}
 		projects.stream().forEach((project) -> {
 			String projectId = project.getId();
 			List<Task> tasks = taskRepository.findByProjectId(projectId);
-			if (tasks != null) {
-				project.setTasksCount(tasks.size());
-			}
+			project.setTasksCount(tasks.size());
+
 		});
 		return projects;
 	}

@@ -46,7 +46,15 @@ public class UserServicesTest {
 	@Test
 	public void test_deleteUser() {
 		User user = new User();
-		user.setId("wqdwef");
+		user.setId("1111111");
+		testCase.deleteUser(user);
+		assertTrue("Delete Success", true);
+	}
+	
+	@Test
+	public void test_deleteUser_1() {
+		User user = new User();
+		user.setId("3254fd");
 		testCase.deleteUser(user);
 		assertTrue("Delete Success", true);
 	}

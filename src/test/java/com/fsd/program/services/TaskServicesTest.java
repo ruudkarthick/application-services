@@ -52,6 +52,19 @@ public class TaskServicesTest {
 			fail("Unexcpected error");
 		}
 	}
+	
+	@Test
+	public void test_addUpdateTask_1() {
+		Map<String, String> requestMap = new HashMap<>();
+		requestMap.put("priority", "1");
+		requestMap.put("parentId","ewf34t43yt4yt");
+		try {
+			assertNotNull(testCase.addUpdateTask(requestMap));
+		} catch (ParseException e) {
+			e.printStackTrace();
+			fail("Unexcpected error");
+		}
+	}
 
 	@Test
 	public void test_addUpdateTask_2() {

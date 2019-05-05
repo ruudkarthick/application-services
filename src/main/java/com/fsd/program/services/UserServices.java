@@ -28,10 +28,10 @@ import com.fsd.program.repo.UserRepository;
 public class UserServices {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserServices.class);
-	
+
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private TaskRepository taskRepository;
 
@@ -49,17 +49,17 @@ public class UserServices {
 		userRepository.save(user);
 		return userRepository.findAll();
 	}
-	
+
 	@RequestMapping("/deleteUser")
 	public List<User> deleteUser(@RequestBody User user) {
 		userRepository.delete(user);
 		List<Task> tasks = taskRepository.findByUserId(user.getId());
-		for(Task task: tasks) {
+		for (Task task : tasks) {
 			task.setUserId("");
 			taskRepository.save(task);
 		}
 		List<Project> projects = projectRepository.findByManagerId(user.getId());
-		for(Project project: projects) {
+		for (Project project : projects) {
 			project.setManagerId("");
 			project.setManagerName("");
 			projectRepository.save(project);
