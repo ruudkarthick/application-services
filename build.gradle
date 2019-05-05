@@ -12,20 +12,7 @@ sourceCompatibility = '1.8'
 
 
 repositories {
-	maven {
-		credentials {
-			username "${artifactory_user}"
-			password "${artifactory_password}"
-		}
-		url "${artifactory_contextUrl}/libs-release"
-	}
-	maven {
-		credentials {
-			username "${artifactory_user}"
-			password "${artifactory_password}"
-		}
-		url "${artifactory_contextUrl}/libs-snapshot"
-	}
+	jcenter()
 }
 
 configurations.all {
