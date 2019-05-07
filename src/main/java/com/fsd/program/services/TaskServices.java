@@ -106,8 +106,9 @@ public class TaskServices {
 		taskEntity.setTask(requestMap.get("task"));
 		taskEntity.setEndDate(requestMap.get("endDate"));
 		taskEntity.setStartDate(requestMap.get("startDate"));
-		String parentId = requestMap.get("parentId") != null ? requestMap.get("parentId") : UUID.randomUUID().toString();
+		String parentId = null;
 		if ("true".equalsIgnoreCase(requestMap.get("isParentTask"))) {
+			parentId = requestMap.get("parentId") != null ? requestMap.get("parentId") : UUID.randomUUID().toString();
 			parentTaskEntity.setId(parentId);
 			parentTaskEntity.setTaskId(requestMap.get("id"));
 			parentTaskEntity.setParentTask(requestMap.get("task"));
